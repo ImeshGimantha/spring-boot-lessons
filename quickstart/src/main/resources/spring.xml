@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        autowire="byName" : it matches same variable name and same bean id
+                            <bean id="dev" class="com.nobody.Dev" autowire="byName"></bean>
+        autowire="byType" : it matches same variable type and bean type
+                            <bean id="dev" class="com.nobody.Dev" autowire="byType"></bean>
+    -->
+    <bean id="dev" class="com.nobody.Dev" autowire="byType"> <!-- id can be any name. class should use with package name -->
+        <!-- if you use property, you must have setter for that -->
+        <property name="age" value="21"/> <!-- put here variable name and its value -->
+        <!--
+            if you have multiple parameter, use index for that,
+            and you have to create multiple lines with index and value
+            example: index="0", index="1", index="3"
+        -->
+        <constructor-arg index="0" value="18"/>
+        <constructor-arg index="1" ref="lap1"/> <!-- constructor injection -->
+        <property name="laptop" ref="lap1"/>
+<!--        <property name="computer" ref="desktop"/>-->
+    </bean>
+
+    <bean id="lap1" class="com.nobody.Laptop">
+    </bean>
+
+    <!-- if there are multiple candidates, use primary to get only one candidate -->
+    <bean id="desktop" class="com.nobody.Desktop" primary="true">
+    </bean>
+
+</beans>
